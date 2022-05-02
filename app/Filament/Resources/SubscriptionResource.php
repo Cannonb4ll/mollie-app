@@ -43,7 +43,13 @@ class SubscriptionResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('subscription_id')->label('ID'),
-                Tables\Columns\TextColumn::make('status'),
+                Tables\Columns\BadgeColumn::make('status')
+                    ->colors([
+                        'primary',
+                        'primary' => fn ($state): bool => $state === 'cancelled',
+                        'warning' => fn ($state): bool => $state === 'pending',
+                        'success' => fn ($state): bool => $state === 'active',
+                    ]),
                 Tables\Columns\TextColumn::make('description')->searchable(),
             ])
             ->filters([

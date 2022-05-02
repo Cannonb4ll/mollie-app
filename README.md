@@ -66,7 +66,7 @@ Each sponsor gets listed on in this readme.
 
 - [Cannonb4ll](https://github.com/cannonb4ll)
 - [Filament Admin](https://filamentadmin.com/)
-- 
+
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.

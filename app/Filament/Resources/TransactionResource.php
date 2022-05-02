@@ -19,6 +19,8 @@ class TransactionResource extends Resource
 
     protected static ?string $navigationGroup = 'Payments';
 
+    protected static ?string $recordTitleAttribute = 'payment_id';
+
     public static function form(Form $form): Form
     {
         return $form
@@ -31,9 +33,16 @@ class TransactionResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('payment_id'),
+                Tables\Columns\TextColumn::make('payment_id')->searchable(),
                 Tables\Columns\TextColumn::make('status'),
-                Tables\Columns\TextColumn::make('description'),
+                Tables\Columns\BadgeColumn::make('status')
+                    ->colors([
+                        'primary',
+                        'primary' => fn ($state): bool => $state === 'expired',
+                        'warning' => fn ($state): bool => $state === 'pending',
+                        'success' => fn ($state): bool => $state === 'paid',
+                    ]),
+                Tables\Columns\TextColumn::make('description')->searchable(),
             ])
             ->filters([
                 //

@@ -29,11 +29,17 @@ class SubscriptionResource extends Resource
                     ->columns(2)
                     ->schema([
                         Forms\Components\TextInput::make('description')->columnSpan(1),
-                        Forms\Components\TextInput::make('total')->numeric()->columnSpan(1),
+                        Forms\Components\TextInput::make('total')
+                            ->afterStateHydrated(function (Forms\Components\TextInput $component, $state) {
+                                $component->state($state / 100);
+                            })
+                            ->numeric()
+                            ->columnSpan(1),
                         Forms\Components\Select::make('currency')->options([
                             'EUR' => 'Euro',
                             'USD' => 'Dollar'
-                        ])
+                        ]),
+                        Forms\Components\TextInput::make('webhook_url')->columnSpan(2),
                     ])
             ]);
     }
@@ -46,11 +52,15 @@ class SubscriptionResource extends Resource
                 Tables\Columns\BadgeColumn::make('status')
                     ->colors([
                         'primary',
-                        'primary' => fn ($state): bool => $state === 'cancelled',
-                        'warning' => fn ($state): bool => $state === 'pending',
-                        'success' => fn ($state): bool => $state === 'active',
+                        'primary' => fn($state): bool => $state === 'cancelled',
+                        'warning' => fn($state): bool => $state === 'pending',
+                        'success' => fn($state): bool => $state === 'active',
                     ]),
+                Tables\Columns\TextColumn::make('total')->money(function ($record) {
+                    return $record->currency;
+                }),
                 Tables\Columns\TextColumn::make('description')->searchable(),
+                Tables\Columns\TextColumn::make('created_at')->dateTime()->sortable()->label('Date')
             ])
             ->filters([
                 //

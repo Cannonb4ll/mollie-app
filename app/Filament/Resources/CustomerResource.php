@@ -35,6 +35,7 @@ class CustomerResource extends Resource
                 Tables\Columns\TextColumn::make('name')->searchable(),
                 Tables\Columns\TextColumn::make('email')->searchable(),
                 Tables\Columns\TextColumn::make('locale'),
+                Tables\Columns\TextColumn::make('created_at')->dateTime()->sortable()->label('Date')
             ])
             ->filters([
                 //

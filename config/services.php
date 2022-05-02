@@ -32,6 +32,7 @@ return [
     ],
 
     'mollie' => [
-        'token' => env('MOLLIE_TOKEN')
+        'token' => env('MOLLIE_TOKEN'),
+        'oauth' => env('MOLLIE_OAUTH_TOKEN')
     ]
 ];

@@ -25,7 +25,7 @@ class TransactionResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\TextInput::make('description')->maxLength(255)
             ]);
     }
 
@@ -43,6 +43,7 @@ class TransactionResource extends Resource
                         'success' => fn ($state): bool => $state === 'paid',
                     ]),
                 Tables\Columns\TextColumn::make('description')->searchable(),
+                Tables\Columns\TextColumn::make('created_at')->dateTime()->sortable()->label('Date')
             ])
             ->filters([
                 //

@@ -14,6 +14,35 @@ With the dashboard Mollie provides, the only thing you can 'really' do is view t
 I've used Laravel, Fillament & Sushi to make this work.
 I use Sushi to make the API calls work for Eloquent so Filament can work with that.
 
+## Installation
+
+First setup a database, and remember the credentials.
+
+```
+git clone https://github.com/Cannonb4ll/mollie-app.git
+composer install
+php -r "file_exists('.env') || copy('.env.example', '.env');"
+php artisan key:generate
+```
+
+Now edit your `.env` file and set up the database credentials, including the App Name you want.
+You will also want to fill in these 2 tokens:
+
+```
+MOLLIE_TOKEN=
+MOLLIE_OAUTH_TOKEN=
+```
+
+The `MOLLIE_TOKEN` is a `live_` or `test_` token you can grab from their portal under "Developers".
+
+Now run the following:
+
+```
+php artisan make:filament-user
+```
+
+And login with the credentials you've provided.
+
 ## Testing
 
 ```bash

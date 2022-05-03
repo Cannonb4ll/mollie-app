@@ -15,7 +15,7 @@ class Transaction extends Model
     public function getRows()
     {
         return Cache::remember('mollie-transactions', now()->addMinutes(10), function () {
-            return collect($this->getMollie()->payments->page(null, 50)->getArrayCopy())
+            return collect($this->getMollie()->payments->page(null, 200)->getArrayCopy())
                 ->map(function (\Mollie\Api\Resources\Payment $payment) {
                     return [
                         'payment_id' => $payment->id,

@@ -42,7 +42,6 @@ class Balance extends Page implements HasTable
 
     protected static function getNavigationBadge(): ?string
     {
-        return '€10.645,52';
         $balance = Cache::remember('mollie-balance-sidebar', now()->addMinutes(10), function () {
             $mollie = new \Mollie\Api\MollieApiClient();
             $mollie->setAccessToken(config('services.mollie.oauth'));

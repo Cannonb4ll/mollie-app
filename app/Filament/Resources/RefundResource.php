@@ -20,6 +20,11 @@ class RefundResource extends Resource
 
     protected static ?string $navigationGroup = 'Payments';
 
+    public static function canCreate(): bool
+    {
+        return false;
+    }
+
     public static function canEdit(Model $record): bool
     {
         return false;
@@ -38,10 +43,10 @@ class RefundResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('refund_id')->label('ID')->searchable(),
-                Tables\Columns\TextColumn::make('description')->searchable(),
                 Tables\Columns\TextColumn::make('total')->money(function($record){
                     return $record->currency;
                 }),
+                Tables\Columns\TextColumn::make('description')->searchable()->toggleable(),
                 Tables\Columns\TextColumn::make('created_at')->dateTime()->sortable()->label('Date')
             ])
             ->filters([

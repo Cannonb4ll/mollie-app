@@ -59,7 +59,7 @@ class SubscriptionResource extends Resource
                 Tables\Columns\TextColumn::make('total')->money(function ($record) {
                     return $record->currency;
                 }),
-                Tables\Columns\TextColumn::make('description')->searchable(),
+                Tables\Columns\TextColumn::make('description')->searchable()->toggleable(),
                 Tables\Columns\TextColumn::make('created_at')->dateTime()->sortable()->label('Date')
             ])
             ->filters([

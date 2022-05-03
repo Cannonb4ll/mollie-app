@@ -24,9 +24,20 @@ class Customer extends Model
                         'name' => $customer->name,
                         'email' => $customer->email,
                         'locale' => $customer->locale,
-                        'created_at' => $customer->createdAt
+                        'metadata' => json_encode($customer->metadata),
+                        'created_at' => $customer->createdAt,
                     ];
                 })->toArray();
         });
+    }
+
+    public function subscriptions()
+    {
+        return $this->hasMany(Subscription::class, 'customer_id', 'customer_id');
+    }
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class, 'customer_id', 'customer_id');
     }
 }

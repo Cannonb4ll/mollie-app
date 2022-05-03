@@ -19,7 +19,11 @@ class Transaction extends Model
                 ->map(function (\Mollie\Api\Resources\Payment $payment) {
                     return [
                         'payment_id' => $payment->id,
+                        'customer_id' => $payment->customerId,
+                        'subscription_id' => $payment->subscriptionId,
                         'status' => $payment->status,
+                        'total' => $payment->amount->value * 100,
+                        'currency' => $payment->amount->currency,
                         'description' => $payment->description,
                         'created_at' => $payment->createdAt
                     ];

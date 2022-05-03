@@ -34,7 +34,6 @@ class TransactionResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('payment_id')->searchable(),
-                Tables\Columns\TextColumn::make('status'),
                 Tables\Columns\BadgeColumn::make('status')
                     ->colors([
                         'primary',
@@ -42,7 +41,10 @@ class TransactionResource extends Resource
                         'warning' => fn ($state): bool => $state === 'pending',
                         'success' => fn ($state): bool => $state === 'paid',
                     ]),
-                Tables\Columns\TextColumn::make('description')->searchable(),
+                Tables\Columns\TextColumn::make('total')->money(function ($record) {
+                    return $record->currency;
+                }),
+                Tables\Columns\TextColumn::make('description')->searchable()->toggleable(),
                 Tables\Columns\TextColumn::make('created_at')->dateTime()->sortable()->label('Date')
             ])
             ->filters([

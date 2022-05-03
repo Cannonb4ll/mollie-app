@@ -20,14 +20,13 @@ class Refund extends Model
                 $this->getMollie()->refunds->page(null, 200)->getArrayCopy()
             )
                 ->map(function (\Mollie\Api\Resources\Refund $refund) {
-                    ray($refund);
                     return [
                         'refund_id' => $refund->id,
                         'description' => $refund->description,
                         'payment_id' => $refund->paymentId,
                         'status' => $refund->status,
-                        'total' => $refund->settlementAmount->value * 100,
-                        'currency' => $refund->settlementAmount->currency,
+                        'total' => $refund->settlementAmount ? $refund->settlementAmount->value * 100 : 0,
+                        'currency' => $refund->settlementAmount ? $refund->settlementAmount->currency : 'EUR',
                         'created_at' => $refund->createdAt
                     ];
                 })->toArray();
